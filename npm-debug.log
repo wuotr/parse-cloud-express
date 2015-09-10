@@ -3,19 +3,99 @@
 2 info using npm@1.4.21
 3 info using node@v0.10.30
 4 verbose publish [ '.' ]
-5 error Failed to parse json
-5 error Unexpected token }
-6 error File: /Users/fjm/git/parse-cloud/package.json
-7 error Failed to parse package.json data.
-7 error package.json must be actual JSON, not just JavaScript.
-7 error
-7 error This is not a bug in npm.
-7 error Tell the package author to fix their package.json file. JSON.parse
-8 error System Darwin 15.0.0
-9 error command "node" "/usr/local/bin/npm" "publish"
-10 error cwd /Users/fjm/git/parse-cloud
-11 error node -v v0.10.30
-12 error npm -v 1.4.21
-13 error file /Users/fjm/git/parse-cloud/package.json
-14 error code EJSONPARSE
-15 verbose exit [ 1, true ]
+5 verbose cache add [ '.', null ]
+6 verbose cache add name=undefined spec="." args=[".",null]
+7 verbose parsed url { protocol: null,
+7 verbose parsed url   slashes: null,
+7 verbose parsed url   auth: null,
+7 verbose parsed url   host: null,
+7 verbose parsed url   port: null,
+7 verbose parsed url   hostname: null,
+7 verbose parsed url   hash: null,
+7 verbose parsed url   search: null,
+7 verbose parsed url   query: null,
+7 verbose parsed url   pathname: '.',
+7 verbose parsed url   path: '.',
+7 verbose parsed url   href: '.' }
+8 silly lockFile 3a52ce78- .
+9 verbose lock . /Users/fjm/.npm/3a52ce78-.lock
+10 verbose tar pack [ '/Users/fjm/.npm/parse-cloud/1.0.0/package.tgz', '.' ]
+11 verbose tarball /Users/fjm/.npm/parse-cloud/1.0.0/package.tgz
+12 verbose folder .
+13 info prepublish parse-cloud@1.0.0
+14 silly lockFile 1f1177db-tar tar://.
+15 verbose lock tar://. /Users/fjm/.npm/1f1177db-tar.lock
+16 silly lockFile b2980b07-pm-parse-cloud-1-0-0-package-tgz tar:///Users/fjm/.npm/parse-cloud/1.0.0/package.tgz
+17 verbose lock tar:///Users/fjm/.npm/parse-cloud/1.0.0/package.tgz /Users/fjm/.npm/b2980b07-pm-parse-cloud-1-0-0-package-tgz.lock
+18 silly lockFile 1f1177db-tar tar://.
+19 silly lockFile 1f1177db-tar tar://.
+20 silly lockFile b2980b07-pm-parse-cloud-1-0-0-package-tgz tar:///Users/fjm/.npm/parse-cloud/1.0.0/package.tgz
+21 silly lockFile b2980b07-pm-parse-cloud-1-0-0-package-tgz tar:///Users/fjm/.npm/parse-cloud/1.0.0/package.tgz
+22 silly lockFile 8c1270b4-jm-npm-parse-cloud-1-0-0-package /Users/fjm/.npm/parse-cloud/1.0.0/package
+23 verbose lock /Users/fjm/.npm/parse-cloud/1.0.0/package /Users/fjm/.npm/8c1270b4-jm-npm-parse-cloud-1-0-0-package.lock
+24 silly lockFile 8c1270b4-jm-npm-parse-cloud-1-0-0-package /Users/fjm/.npm/parse-cloud/1.0.0/package
+25 silly lockFile 8c1270b4-jm-npm-parse-cloud-1-0-0-package /Users/fjm/.npm/parse-cloud/1.0.0/package
+26 silly lockFile 3a52ce78- .
+27 silly lockFile 3a52ce78- .
+28 silly publish { name: 'parse-cloud',
+28 silly publish   version: '1.0.0',
+28 silly publish   description: 'Express middleware and utilities for Parse.com Cloud Code functionality in Node.js',
+28 silly publish   main: 'index.js',
+28 silly publish   repository:
+28 silly publish    { type: 'git',
+28 silly publish      url: 'https://github.com/parseplatform/parse-cloud.git' },
+28 silly publish   keywords: [ 'parse', 'express', 'middleware' ],
+28 silly publish   dependencies: { express: '~4.9', 'body-parser': '~1.12', parse: '~1.6' },
+28 silly publish   author: { name: 'Fosco Marotto', email: 'thedude@fb.com' },
+28 silly publish   license: 'MIT',
+28 silly publish   bugs: { url: 'https://github.com/parseplatform/parse-cloud/issues' },
+28 silly publish   homepage: 'https://github.com/parseplatform/parse-cloud',
+28 silly publish   readme: '## parse-cloud\n\nExpress middleware and utilities for Parse.com Cloud Code functionality in Node.js\n\n### Getting started\n\nAdd parse-cloud as a dependency to your `package.json` file:\n\n```\n  ...\n  "dependencies": {\n    "parse-cloud": "~1.0"\n  }\n  ...\n```\n\nFrom any file that uses Cloud Code, require the module:\n\n```\nvar Parse = require(\'parse-cloud\').Parse;\n```\n\nFrom your main Node app, require the root parse-cloud module, require your cloud code file(s), and mount the provided Express app on some path:\n\n```\n// ...\n\nvar ParseCloud = require(\'parse-cloud\');\nrequire(\'./cloud/main.js\');  // After this, ParseCloud.app will be a configured Express app.\n\n// Mount the cloud code webhook routes on your main Express app:\napp.use(\'/webhooks\', ParseCloud.app);\n\n// ...\n```\n\n',
+28 silly publish   readmeFilename: 'README.md',
+28 silly publish   gitHead: '761ab0a8d57ea4e24cfc21c4f6edda9ed304d93e',
+28 silly publish   _id: 'parse-cloud@1.0.0',
+28 silly publish   scripts: {},
+28 silly publish   _shasum: '2f627e6cd62d54272e131c4f7a8f71368edf5b64',
+28 silly publish   _from: '.' }
+29 verbose request where is /parse-cloud
+30 verbose request registry https://registry.npmjs.org/
+31 verbose request id 0533754d0b5104db
+32 verbose url raw /parse-cloud
+33 verbose url resolving [ 'https://registry.npmjs.org/', './parse-cloud' ]
+34 verbose url resolved https://registry.npmjs.org/parse-cloud
+35 verbose request where is https://registry.npmjs.org/parse-cloud
+36 info trying registry request attempt 1 at 13:11:36
+37 http PUT https://registry.npmjs.org/parse-cloud
+38 http 403 https://registry.npmjs.org/parse-cloud
+39 verbose headers { 'content-type': 'application/json',
+39 verbose headers   'cache-control': 'max-age=60',
+39 verbose headers   'content-length': '103',
+39 verbose headers   'accept-ranges': 'bytes',
+39 verbose headers   date: 'Thu, 10 Sep 2015 20:11:36 GMT',
+39 verbose headers   via: '1.1 varnish',
+39 verbose headers   connection: 'keep-alive',
+39 verbose headers   'x-served-by': 'cache-lax1426-LAX',
+39 verbose headers   'x-cache': 'MISS',
+39 verbose headers   'x-cache-hits': '0',
+39 verbose headers   'x-timer': 'S1441915896.676698,VS0,VE137' }
+40 error publish Failed PUT 403
+41 error Error: You do not have permission to publish 'parse-cloud'. Are you logged in as the correct user? : parse-cloud
+41 error     at RegClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:300:14)
+41 error     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:238:65)
+41 error     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:123:22)
+41 error     at Request.emit (events.js:98:17)
+41 error     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:893:14)
+41 error     at Request.emit (events.js:117:20)
+41 error     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:844:12)
+41 error     at IncomingMessage.emit (events.js:117:20)
+41 error     at _stream_readable.js:938:16
+41 error     at process._tickCallback (node.js:419:13)
+42 error If you need help, you may report this *entire* log,
+42 error including the npm and node versions, at:
+42 error     <http://github.com/npm/npm/issues>
+43 error System Darwin 15.0.0
+44 error command "node" "/usr/local/bin/npm" "publish"
+45 error cwd /Users/fjm/git/parse-cloud
+46 error node -v v0.10.30
+47 error npm -v 1.4.21
+48 verbose exit [ 1, true ]

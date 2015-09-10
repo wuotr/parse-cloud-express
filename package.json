@@ -1,5 +1,5 @@
 {
-  "name": "parse-cloud",
+  "name": "parse-cloud-express",
   "version": "1.0.0",
   "description": "Express middleware and utilities for Parse.com Cloud Code functionality in Node.js",
   "main": "index.js",
