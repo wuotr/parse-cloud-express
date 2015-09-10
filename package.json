@@ -1,0 +1,26 @@
+{
+  "name": "parse-cloud",
+  "version": "1.0.0",
+  "description": "Express middleware and utilities for Parse.com Cloud Code functionality in Node.js",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/parseplatform/parse-cloud.git"
+  },
+  "keywords": [
+    "parse",
+    "express",
+    "middleware"
+  ],
+  "dependencies": {
+    "express": "~4.9",
+    "body-parser": "~1.12",
+    "parse": "~1.6",
+  },
+  "author": "Fosco Marotto <thedude@fb.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/parseplatform/parse-cloud/issues"
+  },
+  "homepage": "https://github.com/parseplatform/parse-cloud"
+}
