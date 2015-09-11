@@ -16,29 +16,29 @@ var Parse = require('parse/node').Parse;
 var Routes = {
   'beforeSave': [],
   'afterSave': [],
+  'beforeDelete': [],
+  'afterDelete': [],
   'function': []
 };
 
-// Make sure to set your Webhook key via heroku config set
+// Make sure to set your Webhook key via heroku config set or local environment variable
 var webhookKey = process.env.PARSE_WEBHOOK_KEY;
 
-// Express middleware to enforce security using the Webhook Key
+// Middleware to enforce security using the Webhook Key
 function validateWebhookRequest(req, res, next) {
   if (req.get('X-Parse-Webhook-Key') !== webhookKey) return errorResponse(res, 'Unauthorized Request.');
   next();
 }
 
-// Express middleware to inflate a beforeSave object to a Parse.Object
+// Middleware to inflate a beforeSave/beforeDelete object to a Parse.Object
 function inflateParseObject(req, res, next) {
   var object = req.body.object;
-  var className = object.className;
-  var parseObject = new Parse.Object(className);
-  parseObject._finishFetch(object);
-  req.body.object = parseObject;
+  var parseObject = Parse.Object.fromJSON(object);
   req.object = req.body.object;
   next();
 }
 
+// Middleware to create the .success and .error methods expected by a Cloud Code function
 function addParseResponseMethods(req, res, next) {
   res.success = function(data) {
     successResponse(res, data);
@@ -49,19 +49,16 @@ function addParseResponseMethods(req, res, next) {
   next();
 }
 
-// Express middleware to promote the cloud function params to the request object
+// Middleware to promote the cloud function params to the request object
 function updateRequestFunctionParams(req, res, next) {
   req.params = req.body.params;
   next();
 }
 
-// Express middleware to inflate a Parse.User if one is passed to the webhook via the 'user' key
+// Middleware to inflate a Parse.User if provided, and promote the master key option to the request
 function inflateParseUser(req, res, next) {
   if (req.body.user) {
-    console.log(req.body);
-    var parseObject = new Parse.User();
-    parseObject._finishFetch(req.body.user);
-    req.user = parseObject;
+    req.user = Parse.Object.fromJSON(req.body.user);
   }
   req.master = req.body.master;
   next();
@@ -78,7 +75,7 @@ var errorResponse = function(res, message) {
   res.status(200).send({ "error" : message });
 }
 
-var afterSaveResponse = function(req, res, next) {
+var emptyResponse = function(req, res, next) {
   res.status(200).send({});
   next();
 };
@@ -86,6 +83,7 @@ var afterSaveResponse = function(req, res, next) {
 var app = express();
 var jsonParser = bodyParser.json();
 
+// All requests handled by this app will require the correct webhook key header
 app.use(validateWebhookRequest);
 app.use(jsonParser);
 
@@ -95,9 +93,19 @@ var beforeSave = function(className, handler) {
 };
 
 var afterSave = function(className, handler) {
-  app.post('/afterSave_' + className, addParseResponseMethods, inflateParseObject, inflateParseUser, afterSaveResponse, handler);
+  app.post('/afterSave_' + className, addParseResponseMethods, inflateParseObject, inflateParseUser, emptyResponse, handler);
   Routes['afterSave'].push(className);
 };
+
+var beforeDelete = function(className, handler) {
+  app.post('/beforeDelete_' + className, addParseResponseMethods, inflateParseObject, inflateParseUser, handler);
+  Routes['beforeDelete'].push(className);
+}
+
+var afterDelete = function(className, handler) {
+  app.post('/afterDelete_' + className, addParseResponseMethods, inflateParseObject, inflateParseUser, emptyResponse, handler);
+  Routes['afterDelete'].push(className);
+}
 
 var define = function(functionName, handler) {
   app.post('/function_' + functionName, updateRequestFunctionParams, addParseResponseMethods, inflateParseUser, handler);
@@ -106,6 +114,8 @@ var define = function(functionName, handler) {
 
 Parse.Cloud.beforeSave = beforeSave;
 Parse.Cloud.afterSave = afterSave;
+Parse.Cloud.beforeDelete = beforeDelete;
+Parse.Cloud.afterDelete = afterDelete;
 Parse.Cloud.define = define;
 
 module.exports = {
