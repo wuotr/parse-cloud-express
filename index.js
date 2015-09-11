@@ -33,8 +33,7 @@ function validateWebhookRequest(req, res, next) {
 // Middleware to inflate a beforeSave/beforeDelete object to a Parse.Object
 function inflateParseObject(req, res, next) {
   var object = req.body.object;
-  var parseObject = Parse.Object.fromJSON(object);
-  req.object = req.body.object;
+  req.object = Parse.Object.fromJSON(object);
   next();
 }
 
