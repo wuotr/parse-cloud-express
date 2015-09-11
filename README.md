@@ -20,6 +20,8 @@ From any file that uses Cloud Code, require the module:
 var Parse = require('parse-cloud-express').Parse;
 ```
 
+Set an environment variable, `PARSE_WEBHOOK_KEY` to the value of your Webhook key in your Parse App settings.
+
 From your main Node app, require the root parse-cloud module, require your cloud code file(s), and mount the provided Express app on some path:
 
 ```
@@ -34,3 +36,4 @@ app.use('/webhooks', ParseCloud.app);
 // ...
 ```
 
+Configure your webhooks on Parse through the dashboard, or see our example project at https://github.com/ParsePlatform/CloudCode-Express-Heroku for an automated script to handle this step.

@@ -12,6 +12,7 @@ See our example project
 var express = require('express');
 var bodyParser = require('body-parser');
 var Parse = require('parse/node').Parse;
+var Request = require('request');
 
 var Routes = {
   'beforeSave': [],
@@ -111,11 +112,27 @@ var define = function(functionName, handler) {
   Routes['function'].push(functionName);
 };
 
+var httpRequest = function(options) {
+  var promise = new Parse.Promise();
+  Request(options, function(error, response, body) {
+    if (error) {
+      console.log('Parse.Cloud.httpRequest failed with error:');
+      console.log(error);
+      promise.reject(response);
+    } else {
+      response.text = body;
+      promise.resolve(response);
+    }
+  });
+  return promise;  
+}
+
 Parse.Cloud.beforeSave = beforeSave;
 Parse.Cloud.afterSave = afterSave;
 Parse.Cloud.beforeDelete = beforeDelete;
 Parse.Cloud.afterDelete = afterDelete;
 Parse.Cloud.define = define;
+Parse.Cloud.httpRequest = httpRequest;
 
 module.exports = {
   Parse: Parse,
