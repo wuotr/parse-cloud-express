@@ -36,4 +36,4 @@ app.use('/webhooks', ParseCloud.app);
 // ...
 ```
 
-Configure your webhooks on Parse through the dashboard, or see our example project at https://github.com/ParsePlatform/CloudCode-Express-Heroku for an automated script to handle this step.
+Configure your webhooks on Parse through the dashboard, or see our example project at https://github.com/ParsePlatform/CloudCode-Express for an automated script to handle this step.
