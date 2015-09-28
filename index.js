@@ -58,6 +58,9 @@ function updateRequestFunctionParams(req, res, next) {
 // Middleware to inflate a Parse.User if provided, and promote the master key option to the request
 function inflateParseUser(req, res, next) {
   if (req.body.user) {
+    if (req.body.user.className === undefined) {
+      req.body.user.className = "_User";
+    }
     req.user = Parse.Object.fromJSON(req.body.user);
   }
   req.master = req.body.master;
