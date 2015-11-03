@@ -145,6 +145,7 @@ Parse.Cloud.beforeDelete = inflateObjectsToClassNames(beforeDelete);
 Parse.Cloud.afterDelete = inflateObjectsToClassNames(afterDelete);
 Parse.Cloud.define = define;
 Parse.Cloud.httpRequest = httpRequest;
+Parse.Cloud.job = function() { console.log('Running jobs is not supported in parse-cloud-express'); }
 
 module.exports = {
   Parse: Parse,
