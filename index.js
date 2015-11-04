@@ -2,7 +2,7 @@
 parse-cloud - This module adds the Parse.Cloud namespace to the Parse JS SDK,
   allowing some code previously written for Cloud Code to run in a Node environment.
 
-Database triggers and cloud functions defined with Parse.Cloud methods will be wrapped 
+Database triggers and cloud functions defined with Parse.Cloud methods will be wrapped
   into an Express app, which can then be mounted on your main Express app.  These
   routes can then be registered with Parse via the Webhooks API.
 
@@ -127,15 +127,25 @@ var httpRequest = function(options) {
       promise.resolve(response);
     }
   });
-  return promise;  
+  return promise;
 }
 
-Parse.Cloud.beforeSave = beforeSave;
-Parse.Cloud.afterSave = afterSave;
-Parse.Cloud.beforeDelete = beforeDelete;
-Parse.Cloud.afterDelete = afterDelete;
+function inflateObjectsToClassNames(methodToWrap) {
+  return function(objectOrClassName, handler) {
+    if (objectOrClassName === null || !objectOrClassName.className) {
+      return methodToWrap(objectOrClassName, handler);
+    }
+    return methodToWrap(objectOrClassName.className, handler);
+  }
+}
+
+Parse.Cloud.beforeSave = inflateObjectsToClassNames(beforeSave);
+Parse.Cloud.afterSave = inflateObjectsToClassNames(afterSave);
+Parse.Cloud.beforeDelete = inflateObjectsToClassNames(beforeDelete);
+Parse.Cloud.afterDelete = inflateObjectsToClassNames(afterDelete);
 Parse.Cloud.define = define;
 Parse.Cloud.httpRequest = httpRequest;
+Parse.Cloud.job = function() { console.log('Running jobs is not supported in parse-cloud-express'); }
 
 module.exports = {
   Parse: Parse,
