@@ -60,6 +60,12 @@ function updateRequestFunctionParams(req, res, next) {
   next();
 }
 
+// Middleware to promote the installationId to the request object
+function updateRequestInstallationId(req, res, next) {
+  req.installationId = req.body.installationId;
+  next();
+}
+
 // Middleware to inflate a Parse.User if provided, and promote the master key option to the request
 function inflateParseUser(req, res, next) {
   if (req.body.user) {
@@ -96,27 +102,27 @@ app.use(validateWebhookRequest);
 app.use(jsonParser);
 
 var beforeSave = function(className, handler) {
-  app.post('/beforeSave_' + className, addParseResponseMethods, inflateParseObject, inflateParseUser, handler);
+  app.post('/beforeSave_' + className, updateRequestInstallationId, addParseResponseMethods, inflateParseObject, inflateParseUser, handler);
   Routes['beforeSave'].push(className);
 };
 
 var afterSave = function(className, handler) {
-  app.post('/afterSave_' + className, addParseResponseMethods, inflateParseObject, inflateParseUser, emptyResponse, handler);
+  app.post('/afterSave_' + className, updateRequestInstallationId, addParseResponseMethods, inflateParseObject, inflateParseUser, emptyResponse, handler);
   Routes['afterSave'].push(className);
 };
 
 var beforeDelete = function(className, handler) {
-  app.post('/beforeDelete_' + className, addParseResponseMethods, inflateParseObject, inflateParseUser, handler);
+  app.post('/beforeDelete_' + className, updateRequestInstallationId, addParseResponseMethods, inflateParseObject, inflateParseUser, handler);
   Routes['beforeDelete'].push(className);
 }
 
 var afterDelete = function(className, handler) {
-  app.post('/afterDelete_' + className, addParseResponseMethods, inflateParseObject, inflateParseUser, emptyResponse, handler);
+  app.post('/afterDelete_' + className, updateRequestInstallationId, addParseResponseMethods, inflateParseObject, inflateParseUser, emptyResponse, handler);
   Routes['afterDelete'].push(className);
 }
 
 var define = function(functionName, handler) {
-  app.post('/function_' + functionName, updateRequestFunctionParams, addParseResponseMethods, inflateParseUser, handler);
+  app.post('/function_' + functionName, updateRequestInstallationId, updateRequestFunctionParams, addParseResponseMethods, inflateParseUser, handler);
   Routes['function'].push(functionName);
 };
 
